@@ -43,4 +43,19 @@ describe("Teste e2e das rotas de Oficinas", () => {
     // status code precisa ser 200
     expect(response.status).toBe(200);
   });
+
+  it("Deve retornar uma oficina específica", async () => {
+    const response = await axios.get(`${baseURL}/oficinas/${firstOficinaId}`, {
+      headers: { Authorization: `Bearer ${token}` }, // Usa o token de autenticação
+    });
+
+    // precisa ser um objeto com oficina
+    expect(response.data).toHaveProperty("oficina");
+
+    // precisa ter um id
+    expect(response.data.oficina).toHaveProperty("id");
+
+    // status code precisa ser 200
+    expect(response.status).toBe(200);
+  });
 });

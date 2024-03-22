@@ -58,4 +58,28 @@ describe("Teste e2e das rotas de Oficinas", () => {
     // status code precisa ser 200
     expect(response.status).toBe(200);
   });
+
+  it("Deve retornar um erro ao tentar obter uma oficina inexistente", async () => {
+    try {
+      await axios.get(`${baseURL}/oficinas/0`, {
+        headers: { Authorization: `Bearer ${token}` }, // Usa o token de autenticação
+      });
+    } catch (error) {
+      // status code precisa ser 404
+      expect(error.response.status).toBe(404);
+      // mostra o status e a mensagem de erro
+      console.log(error.response.status, error.response.data);
+    }
+  });
+
+  it("Deve retornar um erro ao tentar obter uma oficina sem autenticação", async () => {
+    try {
+      await axios.get(`${baseURL}/oficinas/${firstOficinaId}`);
+    } catch (error) {
+      // status code precisa ser 401
+      expect(error.response.status).toBe(401);
+      // mostra o status e a mensagem de erro
+      console.log(error.response.status, error.response.data);
+    }
+  });
 });
